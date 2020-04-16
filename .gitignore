@@ -3,3 +3,6 @@
 js2csv.py
 *.json
 sec-ce*.csv
+*.html
+covid.py
+comitar.sh
