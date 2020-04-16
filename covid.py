@@ -52,6 +52,7 @@ botao = driver.find_element_by_class_name("mat-option-text")
 botao.click()
 sleep(5)
 html = driver.page_source
+'''
 #BAIXANDO DO MINISTERIO DA SAUDE
 driver.get(url_ministerio)
 botao = driver.find_element_by_class_name("icon-btn")
@@ -70,7 +71,7 @@ arquivo = requests.get(url_wcota_cidades)
 open(CSV_DIR + 'cidades.tempo.csv', 'wb').write(arquivo.content)
 arquivo = requests.get(url_wcota_gps)
 open(CSV_DIR + 'cidades.gps.csv', 'wb').write(arquivo.content)
-
+'''
 #Conversao pra CSV
 soup = BeautifulSoup(html, 'lxml')
 tabela = soup.find_all("table")

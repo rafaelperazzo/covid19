@@ -9,19 +9,31 @@ import csv
 import json
 OUTPUT_DIR = '/dados/flask/cimai/covid/'
 
+def removeChar(s):
+
+    r = s.replace('"','')
+    r = r.replace(',','')
+    r = r.replace('.','')
+    return(int(r))
+
+
 class CovidCearaPipeline(object):
 
     def open_spider(self,spider):
         today = date.today()
         data_hoje = today.strftime("%Y-%m-%d")
-        self.file = open(OUTPUT_DIR + 'sec-ce-' + data_hoje +'.json', 'w')
-        #self.writer = csv.writer(self.file)
-        #self.writerow(['cidade','confirmado','suspeitos','obitos'])
+        self.file = open(OUTPUT_DIR + 'TODOS.CEARA.HOJE.CSV', 'w', newline='')
+        self.writer = csv.writer(self.file)
+        self.writer.writerow(['data','cidade','confirmado','suspeitos','obitos'])
+
 
     def close_spider(self,spider):
         self.file.close()
 
     def process_item(self, item, spider):
-        linha = json.dumps(dict(item)) + '\n'
-        self.file.write(linha)
+        dic = dict(item)
+        confirmados = removeChar(str(dic['confirmado']))
+        suspeitos = removeChar(str(dic['suspeitos']))
+        obitos = removeChar(str(dic['obitos']))
+        self.writer.writerow([dic['data'],dic['cidade'],confirmados,suspeitos,obitos])
         return item
