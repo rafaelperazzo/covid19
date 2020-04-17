@@ -31,6 +31,7 @@ class CovidCearaPipeline(object):
         self.file.close()
 
     def process_item(self, item, spider):
+        #https://www.w3schools.in/python-tutorial/remove-space-from-a-string-in-python/
         dic = dict(item)
         confirmados = removeChar(str(dic['confirmado']))
         suspeitos = removeChar(str(dic['suspeitos']))
