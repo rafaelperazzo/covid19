@@ -36,5 +36,8 @@ class CovidCearaPipeline(object):
         confirmados = removeChar(str(dic['confirmado']))
         suspeitos = removeChar(str(dic['suspeitos']))
         obitos = removeChar(str(dic['obitos']))
-        self.writer.writerow([dic['data'],dic['cidade'],confirmados,suspeitos,obitos])
+        cidade = str(dic['cidade'])
+        cidade = cidade.lstrip()
+        cidade = cidade.rstrip()
+        self.writer.writerow([dic['data'],cidade,confirmados,suspeitos,obitos])
         return item

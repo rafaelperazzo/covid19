@@ -14,7 +14,7 @@ from datetime import date
 
 #Fonte: Secretaria de Saúde/CE
 CSV_DIR = '/dados/www/html/covid_csv/spyder/'
-#CSV_DIR = '/dados/flask/cimai/covid/html/'
+
 url = 'https://indicadores.integrasus.saude.ce.gov.br/indicadores/indicadores-coronavirus/coronavirus-ceara'
 
 def getHTML(diaInicial=1,mes='03',headless=False,hoje=True,linhas=[],colunas=[],maxDia=31,anterior=True):
@@ -91,8 +91,8 @@ def getHTML(diaInicial=1,mes='03',headless=False,hoje=True,linhas=[],colunas=[],
 dia_hoje = int(date.today().strftime("%d"))
 print("Baixando HOJE")
 getHTML(headless=True,hoje=True)
-print("Baixando MES MARCO")
-getHTML(diaInicial=1,mes="03",headless=True,hoje=False,linhas=range(2,7,1),colunas=range(1,8,1),maxDia=31,anterior=False)
+#print("Baixando MES MARCO")
+#getHTML(diaInicial=1,mes="03",headless=True,hoje=False,linhas=range(2,7,1),colunas=range(1,8,1),maxDia=31,anterior=False)
 print("Baixando MES ABRIL ATE DIA 04")
 getHTML(diaInicial=1,mes="04",headless=True,hoje=False,linhas=range(1,2,1),colunas=range(2,6,1),maxDia=4,anterior=True)
 print("Baixando MES ABRIL DE 05 A " + str(dia_hoje))

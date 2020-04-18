@@ -7,3 +7,5 @@ cd /dados/flask/cimai/covid/covid_ceara/covid_ceara/
 /usr/local/bin/scrapy crawl Todos 
 #Atualizar datasets
 /usr/bin/curl "https://apps.yoko.pet/cimai/atualizaDatasets"
+#Gravar hora
+/bin/date '+%d/%m/%Y %H:%M:%S' > /dados/flask/cimai/covid/time.txt
