@@ -17,6 +17,6 @@
  <li><b>municipios.csv</b>: Lista de municipios do brasil</li>
  <li><b>time.txt </b>: Data e hora da última atualização dos bots</li>
  <li><b>todos.cariri.hoje.csv </b>: filtro de TODOS.CEARA.HOJE.CSV para as cidades do cariri</li>
- <li><b>TODOS.CEARA.HOJE.CSV </b>(falta inserir o id_ibge e as coordenadas geograficas - VOU FAZER EM BREVE): Dataset baixado e processado pelos procedimentos em agendamento.sh</li>
+ <li><b>TODOS.CEARA.HOJE.CSV </b>: Dataset baixado e processado pelos procedimentos em agendamento.sh</li>
 
 </ul>
