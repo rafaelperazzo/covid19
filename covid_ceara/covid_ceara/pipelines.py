@@ -37,15 +37,31 @@ class CovidCearaPipeline(object):
         data_hoje = today.strftime("%Y-%m-%d")
         self.file = open(OUTPUT_DIR + 'TODOS.CEARA.HOJE.CSV', 'w', newline='')
         self.writer = csv.writer(self.file)
-        self.writer.writerow(['data','cidade','confirmado','suspeitos','obitos'])
+        self.writer.writerow(['data','id_ibge','cidade','gps','latitude','longitude','confirmado','suspeitos','obitos'])
         self.cariri = []
+        #Abrir dicionario GPS
+        arquivo_gps = open(OUTPUT_DIR + 'cidadeGPS.txt','r')
+        latlon = arquivo_gps.read().replace("'","\"")
+        arquivo_gps.close()
+        self.dic_gps = json.loads(latlon)
+        #Abrir dicionario ID
+        arquivo_id = open('cidadeID.txt','r')
+        ids = arquivo_id.read().replace("'","\"")
+        arquivo_gps.close()
+        self.dic_ids = json.loads(ids)
 
     def close_spider(self,spider):
 
         if (len(cidades_cariri)!=len(self.cariri)):
             for c in cidades_cariri:
                 if (c not in self.cariri):
-                    self.writer.writerow([date.today().strftime("%Y-%m-%d"),c,0,0,0])
+                    id_ibge = self.dic_ids[c]
+                    gps = self.dic_gps[c]
+                    latlon = self.dic_gps[c]
+                    lista = latlon.split(',')
+                    latitude = lista[0]
+                    longitude = lista[1]
+                    self.writer.writerow([date.today().strftime("%Y-%m-%d"),id_ibge,c,gps,latitude,longitude,0,0,0])
         self.file.close()
 
     def process_item(self, item, spider):
@@ -61,5 +77,11 @@ class CovidCearaPipeline(object):
         if (cidade in cidades_cariri):
             if cidade not in self.cariri:
                 self.cariri.append(cidade)
-        self.writer.writerow([dic['data'],cidade,confirmados,suspeitos,obitos])
+        id_ibge = self.dic_ids[cidade]
+        gps = self.dic_gps[cidade]
+        latlon = self.dic_gps[cidade]
+        lista = latlon.split(',')
+        latitude = lista[0]
+        longitude = lista[1]
+        self.writer.writerow([dic['data'],id_ibge,cidade,gps,latitude,longitude,confirmados,suspeitos,obitos])
         return item
