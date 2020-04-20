@@ -10,6 +10,8 @@ import progressbar
 import pandas as pd
 import time
 
+HOME_DIR = '/dados/flask/cimai/covid/'
+
 cariri = ['ABAIARA', 'ALTANEIRA', 'ANTONINA DO NORTE', 'ARARIPE', 'ASSARE','AURORA','BARBALHA','BARRO', 'BREJO SANTO', 'CAMPOS SALES', 'CARIRIACU', 'CRATO', 'FARIAS BRITO', 'GRANJEIRO', 'JARDIM', 'JATI', 'JUAZEIRO DO NORTE', 'LAVRAS DA MANGABEIRA', 'MAURITI', 'MILAGRES', 'MISSAO VELHA', 'NOVA OLINDA', 'PENAFORTE', 'PORTEIRAS', 'POTENGI', 'SALITRE', 'SANTANA DO CARIRI', 'TARRAFAS', 'VARZEA ALEGRE']
 
 headers = {
@@ -34,7 +36,7 @@ for i in progressbar.progressbar(range(len(cidades_brasil))):
     id_ibge = cidades_brasil[i]['id']
     try:
         requisicao = json.loads(requests.get("https://nominatim.openstreetmap.org/search?city='" + nome + "'&format=json&state='" + estado + "'").text)
-        time.sleep(1.2)
+        time.sleep(1.2) #não mude, pois você poderá ser bloqueado ou banido da API
         latitude = requisicao[0]['lat']
         longitude = requisicao[0]['lon']
         gps = str(latitude) + ',' + str(longitude)
@@ -53,3 +55,16 @@ j = json.dumps(cidades)
 df_json = pd.read_json(j)
 df_json = df_json[['id','cidade','id_estado','sigla','estado','latitude','longitude','gps']]
 df_json.to_csv('cidades.brasil.completo.csv',index=False)
+
+populacao = pd.read_csv(HOME_DIR + 'municipios.populacao.2019.csv',dtype={'id_uf':str,'id_ibge':str})
+cidades = pd.read_csv(HOME_DIR + 'cidades.brasil.completo.csv')
+
+uf = populacao['id_uf']
+populacao['id_ibge'] = populacao['id_ibge'].str.pad(width=5,fillchar='0',side='left')
+populacao['id'] = populacao['id_uf'] + populacao['id_ibge']
+populacao['id'] = populacao['id'].astype(int)
+populacao.drop(['id_ibge'],axis=1,inplace=True)
+populacao = populacao[['id','populacao']]
+cidades = pd.merge(cidades,populacao,on='id')
+cidades.to_csv(HOME_DIR + 'cidades.brasil.completo.csv',index=False,float_format='%.7f')
+print("PROCEDIMENTO TERMINADO COM SUCESSO!")

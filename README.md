@@ -9,16 +9,15 @@
  <li><b>cidades.brasil.hoje.csv</b>: Dataset do <a href="https://covid.saude.gov.br/">ministério da saúde</a> </li>
  <li><b>cidades.cariri.completo.csv</b>: Dataset das 29 cidades do cariri, com id_ibge, cidade,latitude e longitude</li>
  <li><b>cidades.ceara.completo.csv</b>: Dataset das cidades do ceará, com id_ibge, cidade,latitude e longitude</li>
- <li><b>cidades.brasil.completo.csv</b>: Dataset das cidades do brasil, com id_ibge, cidade,latitude e longitude</li>
+ <li><b>cidades.brasil.completo.csv</b>: Dataset das cidades do brasil, com id_ibge, cidade,latitude ,longitude e população estimada em 2019</li>
  <li><b>covid.ceara.csv</b>: Dataset bruto da secretaria de saude/ce
  <li><b>covid_ceara/ </b>: Projeto Scrapy que gera o arquivo TODOS.CEARA.HOJE.CSV a partir dos dados baixados por agendamento.sh</li>
  <li><b>covid.py </b>: Bot que baixa os dados do ministério da saúde</li>
  <li><b>covid_scrapy.py </b>: Bot que baixa os dados da secretaria de saúde do ceará</li>
  <li><b>getMunicipiosBrasil.py </b>: Script que baixa a lista de municípios do brasil, utilizando
- a API do IBGE, e posteriormente monta um CSV acrescentando as coordenadas geográficas, utilizando
- a API Nominatim, para gerar o arquivo cidades.brasil.completo.csv</li>
+ a API do IBGE, e posteriormente monta um CSV acrescentando as coordenadas geográficas e população
+ estimada, utilizando a API Nominatim, para gerar o arquivo cidades.brasil.completo.csv</li>
  <li><b>covid.sqlite3 </b>: Banco de dados (ainda em desenvolvimento)</li>
- <li><b>municipios.csv</b>: Lista de municipios do brasil</li>
  <li><b>time.txt </b>: Data e hora da última atualização dos bots</li>
  <li><b>todos.cariri.hoje.csv </b>: filtro de TODOS.CEARA.HOJE.CSV para as cidades do cariri</li>
  <li><b>TODOS.CEARA.HOJE.CSV </b>: Dataset baixado e processado pelos procedimentos em agendamento.sh</li>
