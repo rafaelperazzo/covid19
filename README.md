@@ -9,6 +9,7 @@
  <li><b>cidades.brasil.hoje.csv</b>: Dataset do <a href="https://covid.saude.gov.br/">ministério da saúde</a> </li>
  <li><b>cidades.cariri.completo.csv</b>: Dataset das 29 cidades do cariri, com id_ibge, cidade,latitude e longitude</li>
  <li><b>cidades.ceara.completo.csv</b>: Dataset das cidades do ceará, com id_ibge, cidade,latitude e longitude</li>
+ <li><b>cidades.brasil.completo.csv</b>: Dataset das cidades do brasil, com id_ibge, cidade,latitude e longitude</li>
  <li><b>covid.ceara.csv</b>: Dataset bruto da secretaria de saude/ce
  <li><b>covid_ceara/ </b>: Projeto Scrapy que gera o arquivo TODOS.CEARA.HOJE.CSV a partir dos dados baixados por agendamento.sh</li>
  <li><b>covid.py </b>: Bot que baixa os dados do ministério da saúde</li>
