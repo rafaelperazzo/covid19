@@ -14,6 +14,9 @@
  <li><b>covid_ceara/ </b>: Projeto Scrapy que gera o arquivo TODOS.CEARA.HOJE.CSV a partir dos dados baixados por agendamento.sh</li>
  <li><b>covid.py </b>: Bot que baixa os dados do ministério da saúde</li>
  <li><b>covid_scrapy.py </b>: Bot que baixa os dados da secretaria de saúde do ceará</li>
+ <li><b>getMunicipiosBrasil.py </b>: Script que baixa a lista de municípios do brasil, utilizando
+ a API do IBGE, e posteriormente monta um CSV acrescentando as coordenadas geográficas, utilizando
+ a API Nominatim</li>
  <li><b>covid.sqlite3 </b>: Banco de dados (ainda em desenvolvimento)</li>
  <li><b>municipios.csv</b>: Lista de municipios do brasil</li>
  <li><b>time.txt </b>: Data e hora da última atualização dos bots</li>
