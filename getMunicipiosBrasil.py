@@ -19,22 +19,18 @@ headers = {
 
 def prepararPalavra(palavra):
 
-    # Unicode normalize transforma um caracter em seu equivalente em latin.
-    nfkd = unicodedata.normalize('NFKD', palavra)
-    palavraSemAcento = u"".join([c for c in nfkd if not unicodedata.combining(c)])
-
-    # Usa expressão regular para retornar a palavra apenas com números, letras e espaço
-    return re.sub('[^a-zA-Z0-9 \\\]', '', palavraSemAcento)
+    nfkd = unicodedata.normalize('NFKD', palavra).encode('ASCII','ignore').decode('ASCII')
+    return(nfkd.upper())
 
 cidades_brasil = json.loads(requests.get('https://servicodados.ibge.gov.br/api/v1/localidades/municipios',headers=headers).text)
 
 cidades = []
 for i in progressbar.progressbar(range(len(cidades_brasil))):
 #for cidade in cidades_brasil:
-    nome = prepararPalavra(cidades_brasil[i]['nome']).upper()
-    estado = prepararPalavra(cidades_brasil[i]['microrregiao']['mesorregiao']['UF']['nome']).upper()
+    nome = prepararPalavra(cidades_brasil[i]['nome'])
+    estado = prepararPalavra(cidades_brasil[i]['microrregiao']['mesorregiao']['UF']['nome'])
     id_estado = cidades_brasil[i]['microrregiao']['mesorregiao']['UF']['id']
-    sigla_estado = prepararPalavra(cidades_brasil[i]['microrregiao']['mesorregiao']['UF']['sigla']).upper()
+    sigla_estado = prepararPalavra(cidades_brasil[i]['microrregiao']['mesorregiao']['UF']['sigla'])
     id_ibge = cidades_brasil[i]['id']
     try:
         requisicao = json.loads(requests.get("https://nominatim.openstreetmap.org/search?city='" + nome + "'&format=json&state='" + estado + "'").text)
