@@ -33,6 +33,9 @@ profile.set_preference("browser.download.manager.showWhenStarting", False)
 profile.set_preference("browser.download.dir", CSV_DIR)
 profile.set_preference("browser.helperApps.neverAsk.saveToDisk", "text/csv")
 
+os.chdir(CSV_DIR)
+os.system('rm -f arquivo_geral*.csv')
+
 #abrindo o navegador
 driver = webdriver.Firefox(options=options,firefox_profile=profile)
 
@@ -46,6 +49,4 @@ sleep(5)
 driver.quit()
 
 #Renomeando o arquivo
-os.chdir(CSV_DIR)
-os.system('rm -f cidades.brasil.hoje.csv')
-os.system('mv *COVID19_*.csv cidades.brasil.hoje.csv')
+os.system('mv arquivo_geral.csv cidades.brasil.hoje.csv')

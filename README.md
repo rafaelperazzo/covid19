@@ -2,6 +2,7 @@
 <h1>DATASETS COVID19 - BRASIL, CEARÁ E CARIRI</h1>
 <h4>Cron dos arquivos deste projeto: 56 11,19,23 * * * (todos os dias, no minuto 56, nas horas 11,19 e 23) </h4>
 <h4>Cron dos bots: 40 10,17,23 * * * (todos os dias, no minuto 40, nas horas 10,17 e 23)</h4>
+<h4>Atualizações: 11:56, 19:56 e 23:56</h4>
 <ul>
  <li><b>agendamento.sh</b>: Script de agendamento para baixar datasets</li>
  <li><b>cidadeGPS.txt</b>: dicionário (python) com os municipios do ceara e a respectiva coordenada</li>
@@ -17,7 +18,7 @@
  <li><b>getMunicipiosBrasil.py </b>: Script que baixa a lista de municípios do brasil, utilizando
  a API do IBGE, e posteriormente monta um CSV acrescentando as coordenadas geográficas e população
  estimada, utilizando a API Nominatim, para gerar o arquivo cidades.brasil.completo.csv</li>
- <li><b>covid.sqlite3 </b>: Banco de dados (ainda em desenvolvimento)</li>
+ <li><b>cidades.sqlite3 </b>: Banco de dados das cidades brasileiras, com tabelas do brasil, ceará e cariri</li>
  <li><b>time.txt </b>: Data e hora da última atualização dos bots</li>
  <li><b>todos.cariri.hoje.csv </b>: filtro de TODOS.CEARA.HOJE.CSV para as cidades do cariri</li>
  <li><b>TODOS.CEARA.HOJE.CSV </b>: Dataset baixado e processado pelos procedimentos em agendamento.sh</li>
