@@ -61,6 +61,7 @@ class CovidCearaPipeline(object):
                     lista = latlon.split(',')
                     latitude = lista[0]
                     longitude = lista[1]
+                    print(c)
                     self.writer.writerow([date.today().strftime("%Y-%m-%d"),id_ibge,c,gps,latitude,longitude,0,0,0])
         self.file.close()
 
@@ -74,14 +75,22 @@ class CovidCearaPipeline(object):
         cidade = cidade.lstrip()
         cidade = cidade.rstrip()
         cidade = prepararPalavra(cidade)
-        if (cidade in cidades_cariri):
-            if cidade not in self.cariri:
-                self.cariri.append(cidade)
-        id_ibge = self.dic_ids[cidade]
-        gps = self.dic_gps[cidade]
-        latlon = self.dic_gps[cidade]
-        lista = latlon.split(',')
-        latitude = lista[0]
-        longitude = lista[1]
-        self.writer.writerow([dic['data'],id_ibge,cidade,gps,latitude,longitude,confirmados,suspeitos,obitos])
-        return item
+        data = str(dic['data'])
+        if (data==date.today().strftime("%Y-%m-%d")):
+            if (cidade in cidades_cariri):
+                if cidade not in self.cariri:
+                    self.cariri.append(cidade)
+        try:
+            id_ibge = self.dic_ids[cidade]
+            gps = self.dic_gps[cidade]
+            latlon = self.dic_gps[cidade]
+            lista = latlon.split(',')
+            latitude = lista[0]
+            longitude = lista[1]
+            self.writer.writerow([dic['data'],id_ibge,cidade,gps,latitude,longitude,confirmados,suspeitos,obitos])
+            #return item
+        except KeyError:
+            print("ERRO!")
+            #return(item)
+        finally:
+            return (item)
