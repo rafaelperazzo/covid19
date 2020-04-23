@@ -9,8 +9,13 @@ import csv
 import json
 import unicodedata
 import re
+import sys
 
+DB = '/dados/flask/cimai/covid/cidades.sqlite3'
 OUTPUT_DIR = '/dados/flask/cimai/covid/'
+sys.path.insert(0,'/dados/flask/cimai/covid')
+
+import slDB as sq
 
 def removeChar(s):
 
@@ -23,12 +28,8 @@ cidades_cariri = ['ABAIARA', 'ALTANEIRA', 'ANTONINA DO NORTE', 'ARARIPE', 'ASSAR
 
 def prepararPalavra(palavra):
 
-    # Unicode normalize transforma um caracter em seu equivalente em latin.
-    nfkd = unicodedata.normalize('NFKD', palavra)
-    palavraSemAcento = u"".join([c for c in nfkd if not unicodedata.combining(c)])
-
-    # Usa expressão regular para retornar a palavra apenas com números, letras e espaço
-    return re.sub('[^a-zA-Z0-9 \\\]', '', palavraSemAcento)
+    nfkd = unicodedata.normalize('NFKD', palavra).encode('ASCII','ignore').decode('ASCII')
+    return(nfkd.upper())
 
 class CovidCearaPipeline(object):
 
@@ -37,33 +38,28 @@ class CovidCearaPipeline(object):
         data_hoje = today.strftime("%Y-%m-%d")
         self.file = open(OUTPUT_DIR + 'TODOS.CEARA.HOJE.CSV', 'w', newline='')
         self.writer = csv.writer(self.file)
-        self.writer.writerow(['data','id_ibge','cidade','gps','latitude','longitude','confirmado','suspeitos','obitos'])
+        self.writer.writerow(['data','id_ibge','cidade','gps','latitude','longitude','confirmado','suspeitos','obitos','populacao'])
         self.cariri = []
-        #Abrir dicionario GPS
-        arquivo_gps = open(OUTPUT_DIR + 'cidadeGPS.txt','r')
-        latlon = arquivo_gps.read().replace("'","\"")
-        arquivo_gps.close()
-        self.dic_gps = json.loads(latlon)
-        #Abrir dicionario ID
-        arquivo_id = open('cidadeID.txt','r')
-        ids = arquivo_id.read().replace("'","\"")
-        arquivo_gps.close()
-        self.dic_ids = json.loads(ids)
+
+        #sqlite
+        self.conn = sq.MyDB(DB,'ceara')
 
     def close_spider(self,spider):
 
         if (len(cidades_cariri)!=len(self.cariri)):
             for c in cidades_cariri:
                 if (c not in self.cariri):
-                    id_ibge = self.dic_ids[c]
-                    gps = self.dic_gps[c]
-                    latlon = self.dic_gps[c]
-                    lista = latlon.split(',')
-                    latitude = lista[0]
-                    longitude = lista[1]
-                    print(c)
-                    self.writer.writerow([date.today().strftime("%Y-%m-%d"),id_ibge,c,gps,latitude,longitude,0,0,0])
+                    id_ibge = self.conn.getIDFromName(c)
+                    gps = self.conn.getGPSFromID(id_ibge)
+                    populacao = self.conn.getPopulacaoFromID(id_ibge)
+                    latitude = self.conn.getLatitudeFromID(id_ibge)
+                    longitude = self.conn.getLongitudeFromID(id_ibge)
+                    self.writer.writerow([date.today().strftime("%Y-%m-%d"),id_ibge,c,gps,latitude,longitude,0,0,0,populacao])
+
         self.file.close()
+        #sqlite3
+        self.conn.close()
+
 
     def process_item(self, item, spider):
         #https://www.w3schools.in/python-tutorial/remove-space-from-a-string-in-python/
@@ -81,16 +77,16 @@ class CovidCearaPipeline(object):
                 if cidade not in self.cariri:
                     self.cariri.append(cidade)
         try:
-            id_ibge = self.dic_ids[cidade]
-            gps = self.dic_gps[cidade]
-            latlon = self.dic_gps[cidade]
-            lista = latlon.split(',')
-            latitude = lista[0]
-            longitude = lista[1]
-            self.writer.writerow([dic['data'],id_ibge,cidade,gps,latitude,longitude,confirmados,suspeitos,obitos])
-            #return item
+            id_ibge = self.conn.getIDFromName(cidade)
+            gps = self.conn.getGPSFromID(id_ibge)
+            populacao = self.conn.getPopulacaoFromID(id_ibge)
+            latitude = self.conn.getLatitudeFromID(id_ibge)
+            longitude = self.conn.getLongitudeFromID(id_ibge)
+
+            self.writer.writerow([dic['data'],id_ibge,cidade,gps,latitude,longitude,confirmados,suspeitos,obitos,populacao])
+
         except KeyError:
             print("ERRO!")
-            #return(item)
+
         finally:
             return (item)
