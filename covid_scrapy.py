@@ -27,16 +27,16 @@ def getHTML(diaInicial=1,mes='03',headless=False,hoje=True,linhas=[],colunas=[],
     driver = webdriver.Firefox(options=options)
     #BAIXANDO DA SECRETARIA DA SAUDE/CE
     driver.get(url)
-    sleep(3)
+    sleep(4)
     webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
-    sleep(2)
+    sleep(4)
     if (hoje): #Baixa apenas a tabela do dia
         botao = driver.find_element_by_class_name("mat-select-arrow-wrapper")
         botao.click()
-        sleep(2)
+        sleep(5)
         botao = driver.find_element_by_class_name("mat-option-text")
         botao.click()
-        sleep(3)
+        sleep(5)
         html = driver.page_source
         with open(CSV_DIR + 'sec-ce-' + data_hoje +'.html', 'w') as arquivo:
             arquivo.write(html)
@@ -46,22 +46,22 @@ def getHTML(diaInicial=1,mes='03',headless=False,hoje=True,linhas=[],colunas=[],
         clicouNoMesAnterior = anterior
         botao = driver.find_element_by_class_name("mat-select-arrow-wrapper")
         botao.click()
-        sleep(2)
+        sleep(5)
         botao = driver.find_element_by_class_name("mat-option-text")
         botao.click()
-        sleep(2)
+        sleep(5)
         webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
-        sleep(1)
+        sleep(5)
         for i in linhas:
             for j in colunas:
                 #Clica no calendario
                 driver.find_element_by_css_selector(".mat-datepicker-toggle-default-icon").click()
-                sleep(2)
+                sleep(5)
                 #Clica no mês anterior
                 if (not clicouNoMesAnterior):
                     driver.find_element_by_css_selector(".mat-calendar-previous-button").click()
                     clicouNoMesAnterior = True
-                    sleep(2)
+                    sleep(5)
 
                 try:
                     if (dia>maxDia):
