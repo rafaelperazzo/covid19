@@ -27,16 +27,16 @@ def getHTML(diaInicial=1,mes='03',headless=False,hoje=True,linhas=[],colunas=[],
     driver = webdriver.Firefox(options=options)
     #BAIXANDO DA SECRETARIA DA SAUDE/CE
     driver.get(url)
-    sleep(4)
+    sleep(7)
     webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
     sleep(4)
     if (hoje): #Baixa apenas a tabela do dia
         botao = driver.find_element_by_class_name("mat-select-arrow-wrapper")
         botao.click()
-        sleep(5)
+        sleep(8)
         botao = driver.find_element_by_class_name("mat-option-text")
         botao.click()
-        sleep(5)
+        sleep(8)
         html = driver.page_source
         with open(CSV_DIR + 'sec-ce-' + data_hoje +'.html', 'w') as arquivo:
             arquivo.write(html)
@@ -69,7 +69,7 @@ def getHTML(diaInicial=1,mes='03',headless=False,hoje=True,linhas=[],colunas=[],
                         return
                     #Clica no dia
                     driver.find_element_by_css_selector(".mat-calendar-body > tr:nth-child(" + str(i) + ") > td:nth-child(" + str(j) + ") > div:nth-child(1)").click()
-                    sleep(2)
+                    sleep(15)
                     #Monta o nome do arquivo
                     nomearquivo = CSV_DIR + "sec-ce-2020-" + mes + "-" + '{:02d}'.format(dia) + ".html"
                     dia = dia + 1
