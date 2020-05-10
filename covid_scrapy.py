@@ -33,10 +33,10 @@ def getHTML(diaInicial=1,mes='03',headless=False,hoje=True,linhas=[],colunas=[],
     if (hoje): #Baixa apenas a tabela do dia
         botao = driver.find_element_by_class_name("mat-select-arrow-wrapper")
         botao.click()
-        sleep(8)
+        sleep(12)
         botao = driver.find_element_by_class_name("mat-option-text")
         botao.click()
-        sleep(8)
+        sleep(12)
         html = driver.page_source
         with open(CSV_DIR + 'sec-ce-' + data_hoje +'.html', 'w') as arquivo:
             arquivo.write(html)
