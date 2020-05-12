@@ -14,6 +14,7 @@ import csv
 from datetime import date
 import os
 import glob
+import pandas as pd
 
 #Fonte: Ministério da Saúde
 
@@ -31,12 +32,13 @@ profile = webdriver.FirefoxProfile()
 profile.set_preference("browser.download.folderList", 2)
 profile.set_preference("browser.download.manager.showWhenStarting", False)
 profile.set_preference("browser.download.dir", CSV_DIR)
-profile.set_preference("browser.helperApps.neverAsk.saveToDisk", "text/csv")
+profile.set_preference("browser.helperApps.neverAsk.saveToDisk", "application/xls;application/xlsx;text/csv")
 
 os.chdir(CSV_DIR)
-os.system('rm -f arquivo_geral*.csv')
+os.system('rm -f DT_PAINEL*.xlsx')
 
 #abrindo o navegador
+print("Abrindo o navegador...")
 driver = webdriver.Firefox(options=options,firefox_profile=profile)
 
 #BAIXANDO DO MINISTERIO DA SAUDE
@@ -47,6 +49,10 @@ sleep(2)
 botao.click()
 sleep(5)
 driver.quit()
-
+print("Arquivo salvo com sucesso! Fechando navegador!")
 #Renomeando o arquivo
-os.system('mv arquivo_geral.csv cidades.brasil.hoje.csv')
+os.system('mv DT_PAINEL*.xlsx cidades.brasil.hoje.xlsx')
+print("Convertendo arquivo...")
+df = pd.read_excel(CSV_DIR + 'cidades.brasil.hoje.xlsx')
+df.to_csv(CSV_DIR + 'cidades.brasil.hoje.csv',index=False,header=True)
+print("FINALIZADO COM SUCESSO!")
