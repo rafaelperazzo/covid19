@@ -99,5 +99,11 @@ getHTML(headless=True,hoje=True)
 #getHTML(diaInicial=5,mes="04",headless=True,hoje=False,linhas=range(2,6,1),colunas=range(1,8,1),maxDia=30,anterior=False)
 #print("Baixando mês de maio de 1 a 2")
 #getHTML(diaInicial=1,mes="05",headless=True,hoje=False,linhas=range(1,2,1),colunas=range(2,4,1),maxDia=2,anterior=True)
+
 print("Baixando mês de maio de 3 a 31")
 getHTML(diaInicial=3,mes="05",headless=True,hoje=False,linhas=range(2,7,1),colunas=range(1,8,1),maxDia=31,anterior=False)
+
+print("Baixando mês de junho de 1 até 6")
+getHTML(diaInicial=1,mes="06",headless=True,hoje=False,linhas=range(2,7,1),colunas=range(2,8,1),maxDia=dia_hoje,anterior=True)
+#print("Baixando mês de junho de 7 até 30")
+#getHTML(diaInicial=7,mes="06",headless=True,hoje=False,linhas=range(3,7,1),colunas=range(2,8,1),maxDia=30,anterior=True)
