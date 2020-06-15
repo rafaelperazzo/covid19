@@ -16,3 +16,4 @@ class CovidCearaItem(scrapy.Item):
     confirmado = scrapy.Field()
     suspeitos = scrapy.Field()
     obitos = scrapy.Field()
+    recuperados = scrapy.Field()

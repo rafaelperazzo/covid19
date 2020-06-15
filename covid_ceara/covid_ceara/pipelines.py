@@ -19,9 +19,9 @@ sys.path.insert(0,'/dados/flask/cimai/covid')
 
 import slDB as sq
 
-def atualizarDados(conexao=None,id=0,cidade='indefinida',confirmados=0,suspeitos=0,obitos=0,taxa=0,populacao=0):    
-    consulta = 'INSERT INTO hoje(id,cidade,confirmados,suspeitos,obitos,taxa,populacao) VALUES (?,?,?,?,?,?,?)'
-    conexao.execute(consulta,[id,cidade,confirmados,suspeitos,obitos,taxa,populacao])
+def atualizarDados(conexao=None,id=0,cidade='indefinida',confirmados=0,suspeitos=0,obitos=0,taxa=0,populacao=0,recuperados=0):    
+    consulta = 'INSERT INTO hoje(id,cidade,confirmados,suspeitos,obitos,taxa,populacao,recuperados) VALUES (?,?,?,?,?,?,?,?)'
+    conexao.execute(consulta,[id,cidade,confirmados,suspeitos,obitos,taxa,populacao,recuperados])
 
 def removeChar(s):
 
@@ -44,7 +44,7 @@ class CovidCearaPipeline(object):
         data_hoje = today.strftime("%Y-%m-%d")
         self.file = open(OUTPUT_DIR + 'TODOS.CEARA.HOJE.CSV', 'w', newline='')
         self.writer = csv.writer(self.file)
-        self.writer.writerow(['data','id_ibge','cidade','gps','latitude','longitude','confirmado','suspeitos','obitos','populacao'])
+        self.writer.writerow(['data','id_ibge','cidade','gps','latitude','longitude','confirmado','suspeitos','obitos','populacao','recuperados'])
         self.cariri = []
 
         #sqlite
@@ -52,7 +52,7 @@ class CovidCearaPipeline(object):
         self.engine = create_engine('sqlite:///' + DB_HOJE, echo=False)
         self.connHoje = self.engine.connect()
         self.connHoje.execute('DROP TABLE IF EXISTS hoje')
-        self.connHoje.execute('CREATE TABLE hoje (id INT, cidade TEXT, confirmados INT, suspeitos INT, obitos INT, taxa FLOAT, populacao INT)')
+        self.connHoje.execute('CREATE TABLE hoje (id INT, cidade TEXT, confirmados INT, suspeitos INT, obitos INT, taxa FLOAT, populacao INT,recuperados INT)')
 
     def close_spider(self,spider):
 
@@ -65,7 +65,7 @@ class CovidCearaPipeline(object):
                     latitude = self.conn.getLatitudeFromID(id_ibge)
                     longitude = self.conn.getLongitudeFromID(id_ibge)
                     atualizarDados(self.connHoje,id_ibge,c,0,0,0,0,int(populacao))
-                    self.writer.writerow([date.today().strftime("%Y-%m-%d"),id_ibge,c,gps,latitude,longitude,0,0,0,populacao])
+                    self.writer.writerow([date.today().strftime("%Y-%m-%d"),id_ibge,c,gps,latitude,longitude,0,0,0,populacao,0])
 
         self.file.close()
         #sqlite3
@@ -79,6 +79,7 @@ class CovidCearaPipeline(object):
         dic = dict(item)
         confirmados = removeChar(str(dic['confirmado']))
         suspeitos = removeChar(str(dic['suspeitos']))
+        recuperados = removeChar(str(dic['recuperados']))
         obitos = removeChar(str(dic['obitos']))
         cidade = str(dic['cidade'])
         cidade = cidade.lstrip()
@@ -100,9 +101,8 @@ class CovidCearaPipeline(object):
             if (data==date.today().strftime("%Y-%m-%d")):
                 if (cidade in cidades_cariri):
                     taxa = round((int(confirmados)/int(populacao))*100000,2)
-                    atualizarDados(self.connHoje,id_ibge,cidade,int(confirmados),int(suspeitos),int(obitos),taxa,int(populacao))
-
-            self.writer.writerow([dic['data'],id_ibge,cidade,gps,latitude,longitude,confirmados,suspeitos,obitos,populacao])
+                    atualizarDados(self.connHoje,id_ibge,cidade,int(confirmados),int(suspeitos),int(obitos),taxa,int(populacao),int(recuperados))
+            self.writer.writerow([dic['data'],id_ibge,cidade,gps,latitude,longitude,confirmados,suspeitos,obitos,populacao,recuperados])
 
         except KeyError:
             print("ERRO!")

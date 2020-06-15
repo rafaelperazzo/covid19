@@ -38,9 +38,10 @@ class TodosSpider(scrapy.Spider):
             cidade = linhas[i].xpath('td//text()').extract()[0]
             confirmado = linhas[i].xpath('td//text()').extract()[1]
             suspeitos = linhas[i].xpath('td//text()').extract()[2]
+            recuperados = linhas[i].xpath('td//text()').extract()[4]
             try:
                 obitos = linhas[i].xpath('td//text()').extract()[5]
             except IndexError:
                 obitos = linhas[i].xpath('td//text()').extract()[3]
-            entrada = CovidCearaItem(data=data,cidade=cidade,confirmado=confirmado,suspeitos=suspeitos,obitos=obitos)
+            entrada = CovidCearaItem(data=data,cidade=cidade,confirmado=confirmado,suspeitos=suspeitos,obitos=obitos,recuperados=recuperados)
             yield entrada
