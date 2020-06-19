@@ -36,7 +36,7 @@ def getHTML(diaInicial=1,mes='03',headless=False,hoje=True,linhas=[],colunas=[],
         sleep(12)
         botao = driver.find_element_by_class_name("mat-option-text")
         botao.click()
-        sleep(12)
+        sleep(15)
         html = driver.page_source
         with open(CSV_DIR + 'sec-ce-' + data_hoje +'.html', 'w') as arquivo:
             arquivo.write(html)
@@ -49,19 +49,19 @@ def getHTML(diaInicial=1,mes='03',headless=False,hoje=True,linhas=[],colunas=[],
         sleep(5)
         botao = driver.find_element_by_class_name("mat-option-text")
         botao.click()
-        sleep(5)
+        sleep(15)
         webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
-        sleep(5)
+        sleep(15)
         for i in linhas:
             for j in colunas:
                 #Clica no calendario
                 driver.find_element_by_css_selector(".mat-datepicker-toggle-default-icon").click()
-                sleep(5)
+                sleep(15)
                 #Clica no mês anterior
                 if (not clicouNoMesAnterior):
                     driver.find_element_by_css_selector(".mat-calendar-previous-button").click()
                     clicouNoMesAnterior = True
-                    sleep(5)
+                    sleep(15)
 
                 try:
                     if (dia>maxDia):
@@ -69,7 +69,7 @@ def getHTML(diaInicial=1,mes='03',headless=False,hoje=True,linhas=[],colunas=[],
                         return
                     #Clica no dia
                     driver.find_element_by_css_selector(".mat-calendar-body > tr:nth-child(" + str(i) + ") > td:nth-child(" + str(j) + ") > div:nth-child(1)").click()
-                    sleep(15)
+                    sleep(20)
                     #Monta o nome do arquivo
                     nomearquivo = CSV_DIR + "sec-ce-2020-" + mes + "-" + '{:02d}'.format(dia) + ".html"
                     dia = dia + 1
@@ -78,6 +78,9 @@ def getHTML(diaInicial=1,mes='03',headless=False,hoje=True,linhas=[],colunas=[],
                     arquivo.write(driver.page_source)
                     arquivo.close()
                     print(nomearquivo + " gravado com sucesso...")
+                    if (dia>maxDia):
+                        driver.quit()
+                        return
                 except NoSuchElementException:
                     print("Elemento nao encontrado")
                 except ElementClickInterceptedException:
@@ -106,4 +109,4 @@ getHTML(diaInicial=3,mes="05",headless=True,hoje=False,linhas=range(2,7,1),colun
 print("Baixando mês de junho de 1 até 6")
 getHTML(diaInicial=1,mes="06",headless=True,hoje=False,linhas=range(2,7,1),colunas=range(2,8,1),maxDia=6,anterior=True)
 print("Baixando mês de junho de 7 até 30")
-getHTML(diaInicial=7,mes="06",headless=True,hoje=False,linhas=range(3,7,1),colunas=range(2,8,1),maxDia=dia_hoje,anterior=True)
+getHTML(diaInicial=7,mes="06",headless=True,hoje=False,linhas=range(3,7,1),colunas=range(2,8,1),maxDia=dia_hoje-1,anterior=True)
