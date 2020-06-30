@@ -8,6 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.firefox.options import Options
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import ElementClickInterceptedException
+from selenium.common.exceptions import TimeoutException
 from time import sleep
 import time
 from datetime import date
@@ -16,6 +17,18 @@ from datetime import date
 CSV_DIR = '/dados/www/html/covid_csv/spyder/'
 
 url = 'https://indicadores.integrasus.saude.ce.gov.br/indicadores/indicadores-coronavirus/historico-internacoes-covid?modoExibicao=painel'
+
+def aguardaAparecerCarregando(driver,delay):
+    try:
+        myElem = WebDriverWait(driver, delay).until(EC.visibility_of_element_located((By.CLASS_NAME, 'app-loading')))
+    except TimeoutException:
+        print ("FALHOU! NÃO apareceu o carregando!")
+
+def aguardaDesaparecerCarregando(driver,delay):
+    try:
+        myElem = WebDriverWait(driver, delay).until(EC.invisibility_of_element_located((By.CLASS_NAME, 'app-loading')))
+    except TimeoutException:
+        print ("FALHOU! NÃO sumiu o carregando")
 
 def getHTML(diaInicial=1,mes='03',headless=False,hoje=True,linhas=[],colunas=[],maxDia=31,anterior=True):
 
