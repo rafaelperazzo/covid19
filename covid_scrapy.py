@@ -167,5 +167,5 @@ getHTML(headless=True,hoje=True)
 
 #print("Baixando mês de junho de 1 até 6")
 #getHTML(diaInicial=1,mes="06",headless=False,hoje=False,linhas=range(2,7,1),colunas=range(2,8,1),maxDia=6,anterior=True)
-print("Baixando mês de junho de 7 até 30")
-getHTML(diaInicial=7,mes="06",headless=True,hoje=False,linhas=range(3,7,1),colunas=range(1,8,1),maxDia=dia_hoje-1,anterior=True)
+#print("Baixando mês de junho de 7 até 30")
+#getHTML(diaInicial=7,mes="06",headless=True,hoje=False,linhas=range(3,7,1),colunas=range(1,8,1),maxDia=dia_hoje-1,anterior=True)

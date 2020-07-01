@@ -46,21 +46,21 @@ def getHTML(diaInicial=1,mes='03',headless=False,hoje=True,linhas=[],colunas=[],
     if (hoje): #Baixa apenas a tabela do dia
         botao = driver.find_element_by_css_selector("#mat-select-0 > div:nth-child(1) > div:nth-child(2) > div:nth-child(1)")
         botao.click()
-        sleep(4)
+        sleep(8)
         for cidade in cidades:
             botao = driver.find_element_by_css_selector("#mat-option-" + str(cidade) + " > mat-pseudo-checkbox:nth-child(1)")
             botao.click()
-            sleep(4)
+            sleep(8)
         '''
         botao = driver.find_element_by_css_selector("#mat-option-52 > mat-pseudo-checkbox:nth-child(1)")
         botao.click()
-        sleep(4)
+        sleep(8)
         botao = driver.find_element_by_css_selector("#mat-option-99 > mat-pseudo-checkbox:nth-child(1)")
         botao.click()
-        sleep(4)
+        sleep(8)
         botao = driver.find_element_by_css_selector("#mat-option-24 > mat-pseudo-checkbox:nth-child(1)")
         botao.click()
-        sleep(4)
+        sleep(8)
         '''
         html = driver.page_source
         with open(CSV_DIR + 'sec-ce-internacoes-hoje.html', 'w') as arquivo:
