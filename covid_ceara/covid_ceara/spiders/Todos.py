@@ -31,6 +31,8 @@ class TodosSpider(scrapy.Spider):
 
     def parse(self, response):
         tabela = response.xpath('//*[@class="mat-table"]')
+        if len(tabela)==0:
+            tabela = response.xpath('//*[@class="mat-table cdk-table mat-sort"]')
         linhas = tabela.xpath('//tr')
         for i in range(1,len(linhas),1):
             #data = date.today().strftime("%Y-%m-%d")
