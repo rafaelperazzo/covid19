@@ -66,6 +66,7 @@ def getHTML(diaInicial=1,mes='03',headless=False,hoje=True,linhas=[],colunas=[],
             while (continuar):
                 try:
                     botao.click()
+                    sleep(4)
                     continuar = False
                 except ElementClickInterceptedException:
                     logging.debug("Erro ao clicar: " + str(cidade))
