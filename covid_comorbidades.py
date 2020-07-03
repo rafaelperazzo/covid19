@@ -68,13 +68,13 @@ def getHTML(diaInicial=1,mes='03',headless=False,hoje=True,linhas=[],colunas=[],
             while (continuar):
                 try:
                     botao.click()
-                    sleep(10)
                     continuar = False
                 except ElementClickInterceptedException:
                     logging.debug("Erro ao clicar: " + str(cidade))
 
             aguardaElementoDisponivel(driver,delay)
             aguardaDesaparecerCarregando(driver,delay,'app-loading')
+            sleep(4)
         sleep(15)
         html = driver.page_source
         
