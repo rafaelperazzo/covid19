@@ -100,7 +100,7 @@ class CovidCearaPipeline(object):
             #Inserindo os dados da data atual
             if (data==date.today().strftime("%Y-%m-%d")):
                 if (cidade in cidades_cariri):
-                    taxa = round((int(confirmados)/int(populacao))*100000,2)
+                    taxa = round((int(confirmados-recuperados)/int(populacao))*100000,2)
                     atualizarDados(self.connHoje,id_ibge,cidade,int(confirmados),int(suspeitos),int(obitos),taxa,int(populacao),int(recuperados))
             self.writer.writerow([dic['data'],id_ibge,cidade,gps,latitude,longitude,confirmados,suspeitos,obitos,populacao,recuperados])
 

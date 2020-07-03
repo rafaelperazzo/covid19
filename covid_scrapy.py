@@ -16,7 +16,7 @@ import logging
 
 #Fonte: Secretaria de Saúde/CE
 CSV_DIR = '/dados/www/html/covid_csv/spyder/'
-logging.basicConfig(filename=CSV_DIR + 'covid.scrapy.log', filemode='w', format='%(asctime)s %(name)s - %(levelname)s - %(message)s',level=logging.DEBUG)
+logging.basicConfig(filename=CSV_DIR + 'covid.scrapy.log', filemode='w', format='%(asctime)s %(name)s - %(levelname)s - %(message)s',level=logging.ERROR)
 url = 'https://indicadores.integrasus.saude.ce.gov.br/indicadores/indicadores-coronavirus/coronavirus-ceara'
 
 def aguardaAparecerCarregando(driver,delay):
@@ -177,5 +177,11 @@ getHTML(headless=True,hoje=True)
 
 #print("Baixando mês de junho de 1 até 6")
 #getHTML(diaInicial=1,mes="06",headless=False,hoje=False,linhas=range(2,7,1),colunas=range(2,8,1),maxDia=6,anterior=True)
+
+print("Baixando mês de julho de 1 até 4")
+getHTML(diaInicial=1,mes="07",headless=True,hoje=False,linhas=range(1,2,1),colunas=range(2,6,1),maxDia=dia_hoje-1,anterior=True)
+
 print("Baixando mês de junho de 7 até 30")
 getHTML(diaInicial=7,mes="06",headless=True,hoje=False,linhas=range(3,7,1),colunas=range(1,8,1),maxDia=30,anterior=False)
+
+
