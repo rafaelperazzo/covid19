@@ -68,13 +68,14 @@ def getHTML(diaInicial=1,mes='03',headless=False,hoje=True,linhas=[],colunas=[],
             while (continuar):
                 try:
                     botao.click()
+                    sleep(10)
                     continuar = False
                 except ElementClickInterceptedException:
                     logging.debug("Erro ao clicar: " + str(cidade))
 
             aguardaElementoDisponivel(driver,delay)
             aguardaDesaparecerCarregando(driver,delay,'app-loading')
-            
+        sleep(15)
         html = driver.page_source
         
         with open(CSV_DIR + 'sec-ce-comorbidades-hoje.html', 'w') as arquivo:
@@ -82,7 +83,6 @@ def getHTML(diaInicial=1,mes='03',headless=False,hoje=True,linhas=[],colunas=[],
             arquivo.close()
         
     #Finalizando
-    sleep(6)
     aguardaDesaparecerCarregando(driver,delay)
     driver.quit()
 
