@@ -45,7 +45,15 @@ def dadosCovid():
     agrupadosEvolucao = df_cariri.groupby(['data'])
     evolucaoTotal = agrupadosEvolucao['confirmado','suspeitos','obitos'].sum()
     cidades_confirmadas = porCidade[porCidade['confirmado']>0]
-
+    #GRAVANDO EVOLUCAO TOTAL
+    agrupadosEvolucaoTotal = df_cariri.groupby(['data','cidade'])
+    evolucaoTotalPorCidade = agrupadosEvolucaoTotal['confirmado','obitos'].sum()
+    arquivo = COVID_DIR + 'dados.cariri.hoje.sqlite3'
+    conn = sqlite3.connect(arquivo)
+    c = conn.cursor()
+    evolucaoTotalPorCidade.to_sql("evolucaoTotal",conn,if_exists='replace',index=True)
+    conn.close()
+    #CONTINUANDO
     datas = evolucaoTotal.index.to_list()
     confirmados = evolucaoTotal['confirmado'].to_list()
     suspeitos = evolucaoTotal['suspeitos'].to_list()
