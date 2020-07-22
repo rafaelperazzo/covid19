@@ -247,7 +247,7 @@ def atualizarDados():
     salvarDadosGrafico(ARQUIVO,"confirmadosPorIdade",agrupamentos[6],agrupamentos[7])
     salvarDadosGrafico(ARQUIVO,"confirmadosPorSexo",agrupamentos[3],agrupamentos[2])    
     salvarDadosGrafico(ARQUIVO,"obitosPorIdade",agrupamentos[6],agrupamentos[9]['Quantidade'].tolist()) 
-    salvarDadosGrafico(ARQUIVO,"obitosPorSexo",agrupamentos[3],agrupamentos[10])
+    #salvarDadosGrafico(ARQUIVO,"obitosPorSexo",agrupamentos[3],agrupamentos[10])
     salvarDadosGrafico(ARQUIVO,"evolucao",evolucaoDataSet[0],evolucaoDataSet[1],evolucaoDataSet[3])
     porCemMil = ((cidades_confirmadas['confirmado']/cidades_confirmadas['populacao'])*100000).round(2)
     conf = np.array(cidades_confirmadas['confirmado'].tolist())
